@@ -1,0 +1,19 @@
+export interface User { id:number; name:string; email:string; role:'admin'|'manager'|'member'; active:boolean }
+export interface Project { id:number; name:string; description:string; objective:string; scope:string; owner_id:number; manager_id:number; member_ids:number[]; start_date:string; end_date:string; actual_end_date:string|null; status:string; priority:string; progress:number; budget:number|null; area:string }
+export interface Task { id:number; project_id:number; milestone_id:number|null; title:string; description:string; assignee_id:number; reporter_id:number; priority:string; status:string; progress:number; start_date:string; due_date:string; completed_at:string|null; estimated_effort:number; actual_effort:number; labels:string[]; dependencies:number[]; downstream:number[]; blocked_by:number[]; overdue:boolean }
+export interface Milestone { id:number; project_id:number; name:string; description:string; owner_id:number; start_date:string; due_date:string; completed_at:string|null; status:string; priority:string; progress:number; deliverables:string; completion_notes:string; dependencies:number[]; downstream:number[]; blocked_by:number[] }
+export interface Risk { id:number; project_id:number; title:string; description:string; owner_id:number; category:string; probability:number; impact:number; score:number; severity:string; status:string; identified_date:string; target_date:string; mitigation:string; contingency:string; latest_update:string; overdue:boolean }
+export interface Page<T> {items:T[]; total:number; page:number; size:number}
+export interface Point {name:string; value:number}
+export interface Metrics {total_projects:number; active_projects:number; completed_projects:number; projects_at_risk:number; total_tasks:number; eligible_tasks:number; completed_tasks:number; task_completion_rate:number; overdue_tasks:number; total_milestones:number; completed_milestones:number; milestone_completion_rate:number; progress:number; planned_progress:number; schedule_variance_pp:number; completed_schedule_variance_days:number|null; on_time_delivery_rate:number; on_time_denominator:number; open_risks:number; critical_risks:number; risk_exposure:number; health:string; health_reasons:string[]; project_status:Point[]; task_status:Point[]; milestone_status:Point[]; risk_severity:Point[]; upcoming:{id:number;title:string;due_date:string;project_id:number}[]; projects?: (Metrics & {id:number;name:string})[]}
+export interface Trend {name:string; completed:number; variance_days:number|null}
+export interface Workload extends Point {user_id:number; effort:number; overloaded:boolean}
+export interface Activity {id:number; actor_id:number; event:string; detail:Record<string,unknown>; created_at:string}
+export interface Notice {id:number; project_id:number; message:string; read:boolean; created_at:string}
+export interface Comment {id:number; author_id:number; body:string; created_at:string}
+export interface Report {id:number; project_id:number; period_start:string; period_end:string; comments:string; next_priorities:string; created_at:string; snapshot:{overview:Project; kpis:Metrics; completed_work:Task[]; in_progress:Task[]; upcoming_milestones:Milestone[]; overdue_tasks:Task[]; active_risks:Risk[]; blockers:Task[]; mitigation_actions:{risk:string;strategy:string;target_date:string;latest_update:string}[]}}
+export const taskStatuses=['Backlog','To Do','In Progress','Blocked','In Review','Completed','Cancelled']
+export const milestoneStatuses=['Not Started','In Progress','Completed','Delayed','At Risk']
+export const projectStatuses=['Planning','Not Started','In Progress','On Hold','At Risk','Completed','Cancelled']
+export const riskStatuses=['Identified','Under Assessment','Mitigation Planned','In Progress','Resolved','Accepted']
+export const priorities=['Low','Medium','High','Critical']
